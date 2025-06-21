@@ -1,0 +1,163 @@
+/* General Container */
+.results-container {
+  padding: 30px;
+  max-width: 1200px; /* Max width for content */
+  margin: 20px auto; /* Center the container with some top/bottom margin */
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /* Soft shadow */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.results-container h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  font-weight: 600;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+/* Vector Used for Search Section */
+.results-container h3 {
+  color: #34495e;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+  border-bottom: 1px dashed #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.vector-display {
+  background-color: #eaf2f8; /* Light blue background */
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9em;
+  color: #2c3e50;
+  overflow-x: auto; /* Allow horizontal scrolling for long vectors */
+  white-space: nowrap; /* Keep vector numbers on one line */
+  border: 1px solid #d4e6f1;
+}
+
+.vector-display span {
+  margin-right: 8px; /* Space between numbers */
+  display: inline-block; /* Ensure span respects margin */
+}
+
+/* Search Results Grid */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); /* Responsive grid */
+  gap: 30px; /* Space between grid items */
+  margin-top: 40px;
+}
+
+/* Individual Search Result Item */
+.search-result-item {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Lighter shadow for items */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes score to bottom if content varies */
+}
+
+.search-result-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); /* More prominent shadow on hover */
+}
+
+.search-result-item h4 {
+  color: #34495e;
+  margin-bottom: 15px;
+  font-size: 1.3em;
+  font-weight: 500;
+}
+
+.search-result-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Rounded corners for images */
+  margin-bottom: 15px;
+  object-fit: contain; /* Ensures the whole image is visible */
+  border: 1px solid #f0f0f0; /* Slight border around images */
+}
+
+.search-result-item p {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.search-result-item strong {
+  color: #2c3e50; /* Stronger color for labels */
+}
+
+/* Vector Display within result item */
+.search-result-item > div:last-child {
+  /* Targets the div containing the result vector */
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px dashed #eee;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.85em;
+  color: #4a69bd; /* A different shade for result vectors */
+}
+
+.search-result-item > div:last-child span {
+  margin-right: 6px;
+  display: inline-block;
+}
+
+/* No Results Message */
+.results-container > p {
+  text-align: center;
+  font-size: 1.2em;
+  color: #7f8c8d;
+  margin-top: 50px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .results-container {
+    padding: 20px;
+    margin: 10px auto;
+  }
+
+  .results-container h2 {
+    font-size: 1.8em;
+  }
+
+  .search-results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .results-container {
+    padding: 15px;
+  }
+
+  .search-results-grid {
+    grid-template-columns: 1fr; /* Stack items on very small screens */
+  }
+
+  .search-result-item {
+    padding: 15px;
+  }
+}

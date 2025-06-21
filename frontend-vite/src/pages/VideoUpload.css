@@ -1,0 +1,280 @@
+/* Style for the body to center content */
+body {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Stack children vertically: card then grid */
+  align-items: center; /* Center horizontally for all direct children */
+  min-height: 100vh; /* Ensure body takes full viewport height */
+  margin: 0; /* Remove default browser margin */
+  padding: 20px; /* Add some padding around the content if desired */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+  background-color: #f0f2f5; /* A light background for better visual separation */
+}
+
+/* Main container for the upload section and potentially the grid */
+.upload-container {
+  font-family: Arial, sans-serif;
+  /* This container itself will be centered due to body's align-items: center */
+  width: 100%; /* Allows it to take full width for horizontal centering of its children */
+  display: flex; /* Use flexbox to center the .card within it */
+  justify-content: center; /* Center the .card horizontally */
+  flex-direction: column; /* Stack children vertically if there are more than just the card */
+  align-items: center; /* Center items within if it has multiple children that need centering */
+}
+
+.card {
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Centers the text and inline/inline-block elements inside the card */
+  margin-top: 20px; /* Pushes the card slightly down from the top of the viewport */
+  margin-bottom: 40px; /* Increased margin to separate it more from the grid below */
+  /* width: fit-content; */ /* Removed this to allow buttons to span better, handled by flex below */
+  max-width: 90%; /* To prevent the card from becoming too wide on very large screens */
+  min-width: 300px; /* Ensure a minimum width for better appearance */
+
+  /* Flexbox for centering content (h2, buttons, video preview) within the card */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers content like h2, video, and the button group */
+}
+
+h2 {
+  /* Targeted h2 as per your JSX */
+  margin-top: 0; /* Remove default top margin for h2 */
+  margin-bottom: 20px; /* Add space below the heading */
+  color: #333;
+}
+
+/* Container for the choose file and upload buttons to keep them together */
+.card > div {
+  /* This targets the div wrapping the two buttons */
+  display: flex;
+  justify-content: center; /* Centers the buttons horizontally within their div */
+  align-items: center; /* Aligns them vertically if they had different heights */
+  flex-wrap: wrap; /* Allows buttons to wrap to next line on small screens */
+  margin-bottom: 10px; /* Space between buttons and video/error message */
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  margin: 5px; /* Consistent margin around all buttons */
+  font-size: 1em;
+}
+
+.choose-file-button {
+  /* Specific styles for choose file button if needed, otherwise inherits from button */
+}
+
+.upload-button {
+  /* Specific styles for upload button if needed, otherwise inherits from button */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.file-name {
+  margin-left: 10px;
+  font-style: italic;
+  color: #555;
+  white-space: nowrap; /* Prevent file name from wrapping */
+  overflow: hidden; /* Hide overflow if it's too long */
+  text-overflow: ellipsis; /* Add ellipsis for long file names */
+  max-width: 150px; /* Limit width of file name display */
+}
+
+video {
+  margin-top: 20px; /* Space above the video preview */
+  margin-bottom: 20px; /* Space below the video preview */
+  max-width: 100%; /* Ensure video fits within the card */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 0.9em;
+  text-align: center; /* Ensure error message is centered */
+}
+
+.grid-container {
+  display: grid;
+  /* Make 4 columns, each taking equal fractional space */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Space between grid items */
+  padding: 20px; /* Padding around the entire grid */
+  max-width: 1200px; /* Limit the maximum width of the grid for readability */
+  width: 100%; /* Ensure it takes full available width up to max-width */
+  box-sizing: border-box; /* Include padding in the element's total width */
+}
+
+.frame-card {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtle shadow for cards */
+  display: flex; /* Use flexbox for content inside card */
+  flex-direction: column; /* Stack image, h4, and vector vertically */
+}
+
+.frame-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.frame-image-button {
+  padding: 0; /* Remove padding from the button to make image fill it */
+  border: none; /* Remove button border */
+  background: none; /* Remove button background */
+  cursor: pointer;
+  display: block; /* Make it a block element to take full width */
+  width: 100%; /* Ensure the button takes full width of its parent */
+  margin-bottom: 10px; /* Space between image and vector scroll */
+}
+
+.frame-image-button img {
+  width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 6px;
+  display: block; /* Remove extra space below image */
+  object-fit: cover; /* Ensures image covers the area without distortion, might crop */
+}
+
+.frame-image-button:hover img {
+  opacity: 0.8; /* Subtle visual feedback on hover */
+}
+
+.vector-scroll {
+  font-size: 12px;
+  color: #333;
+  text-align: left;
+  max-height: 80px; /* Limits the height of the text area */
+  overflow-y: auto; /* Adds scrollbar if content overflows */
+  word-break: break-word; /* Breaks long words to fit container */
+  padding-right: 5px; /* Add a small padding to prevent text from touching scrollbar */
+  flex-grow: 1; /* Allows this section to grow and take available space */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    padding: 10px;
+    gap: 15px;
+  }
+  .upload-container,
+  .card {
+    padding: 15px;
+  }
+  .card > div {
+    /* For the button container */
+    flex-direction: column; /* Stack buttons vertically on small screens */
+  }
+  .file-name {
+    margin-left: 0;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* 1 column on small phones */
+    padding: 10px;
+    gap: 10px;
+  }
+  body {
+    padding: 10px;
+  }
+  .card {
+    padding: 15px; /* Smaller padding on small screens */
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  button {
+    padding: 8px 15px; /* Smaller buttons on small screens */
+    font-size: 0.9em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+}
+/* Add this snippet to your VideoUpload.css file */
+
+.frame-image-button:hover img {
+  opacity: 0.8; /* Slightly dim the image on hover */
+  transform: scale(1.05); /* Slightly enlarge the image on hover */
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition for the effect */
+}
+
+/* Optional: Add a subtle transition to the default state as well for smoothness when mouse leaves */
+.frame-image-button img {
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+/* In your VideoUpload.css file */
+
+/* Default state: make the upload button transparent or blend in */
+.upload-button {
+  background: transparent; /* Or match your card's background: #f4f4f4; */
+  color: #007bff; /* Make the text color the primary blue */
+  border: 1px solid #007bff; /* Add a thin border to define its shape */
+  /* Inherits other properties like padding, border-radius, etc., from the general 'button' rule */
+}
+
+/* Hover state: apply the blue background */
+.upload-button:hover {
+  background: #007bff; /* The blue color will now appear only on hover */
+  color: white; /* Change text to white for contrast on blue background */
+  border-color: #007bff; /* Keep border color consistent with background */
+}
+
+/* Add a transition to the general button rule if not already present for smoothness */
+button {
+  /* ... existing button styles ... */
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease; /* Ensure smooth transition */
+}
+
+/* For the disabled state, ensure it doesn't get the hover effect */
+button:disabled {
+  background: #ccc;
+  color: white;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Ensure 'Choose File' button keeps its standard look if you want it to be always blue */
+.choose-file-button {
+  background: #007bff; /* Keep it blue by default */
+  color: white;
+  border: 1px solid #007bff;
+  /* ... other styles ... */
+}
+
+.choose-file-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  border-color: #0056b3;
+}
