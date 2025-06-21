@@ -1,113 +1,3 @@
-# from fastapi import FastAPI, UploadFile, File
-# from fastapi.middleware.cors import CORSMiddleware
-# from fastapi.responses import JSONResponse
-# import cv2
-# import os
-# import uuid
-# import numpy as np
-# from qdrant_client import QdrantClient, models as qmodels
-
-# app = FastAPI()
-
-# # CORS for frontend access
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["http://localhost:5173", "http://localhost:3000"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-# # Qdrant client setup (Docker local)
-# qdrant = QdrantClient(host="localhost", port=6333)
-# COLLECTION_NAME = "video_frames"
-# VECTOR_DIM = 24  # bins=8 x 3 channels = 24 features
-
-# # Create collection if not exists
-# # Recreate collection if exists (to match updated VECTOR_DIM)
-# if qdrant.collection_exists(COLLECTION_NAME):
-#     qdrant.delete_collection(collection_name=COLLECTION_NAME)
-
-# qdrant.create_collection(
-#     collection_name=COLLECTION_NAME,
-#     vectors_config=qmodels.VectorParams(
-#         size=VECTOR_DIM,
-#         distance=qmodels.Distance.COSINE
-#     )
-# )
-
-
-# # Feature vector: Color histogram extractor
-# def extract_color_histogram(image, bins=8):
-#     chans = cv2.split(image)
-#     hist = []
-#     for chan in chans:
-#         h = cv2.calcHist([chan], [0], None, [bins], [0, 256])
-#         hist.extend(h.flatten())
-#     hist = np.array(hist).astype("float")
-#     norm = np.linalg.norm(hist)
-#     if norm > 0:
-#         hist /= norm
-#     return hist
-
-# # Video processing route
-# @app.post("/process_video")
-# async def process_video(video_file: UploadFile = File(...)):
-#     temp_path = f"temp_{video_file.filename}"
-#     with open(temp_path, "wb") as f:
-#         f.write(await video_file.read())
-
-#     cap = cv2.VideoCapture(temp_path)
-#     if not cap.isOpened():
-#         return JSONResponse(status_code=500, content={"success": False, "message": "Could not open video"})
-
-#     os.makedirs(os.path.join("frontend-vite", "public", "frames"), exist_ok=True)
-#     count = 0
-#     frames = []
-
-#     fps = cap.get(cv2.CAP_PROP_FPS)
-#     frame_interval = int(fps) if fps > 0 else 1
-#     frame_number = 0
-
-#     while True:
-#         ret, frame = cap.read()
-#         if not ret:
-#             break
-
-#         if frame_number % frame_interval == 0:
-#             frame_filename = f"frame_{count}.jpg"
-#             frame_path = os.path.join("frontend-vite", "public", "frames", frame_filename)
-#             cv2.imwrite(frame_path, frame)
-#             frames.append(f"/frames/{frame_filename}")
-
-#             # Feature extraction
-#             vector = extract_color_histogram(frame)
-
-#             if len(vector) != VECTOR_DIM:
-#                 return JSONResponse(
-#                     status_code=500,
-#                     content={"success": False, "message": f"Vector dimension mismatch: expected {VECTOR_DIM}, got {len(vector)}"}
-#                 )
-
-#             # Insert into Qdrant
-#             qdrant.upsert(
-#                 collection_name=COLLECTION_NAME,
-#                 points=[
-#                     qmodels.PointStruct(
-#                         id=str(uuid.uuid4()),
-#                         vector=vector.tolist(),
-#                         payload={"frame_path": frame_filename}
-#                     )
-#                 ]
-#             )
-#             count += 1
-
-#         frame_number += 1
-
-#     cap.release()
-#     os.remove(temp_path)
-
-#     return {"success": True, "frames": frames}
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -278,7 +168,7 @@ async def search_vector(request: SearchVectorRequest):
             query_vector=request.vector,
             limit=5,
             with_payload=True,
-            with_vectors=True  # ✅ Include vector in results
+            with_vectors=True 
         )
         print(f"Qdrant search returned {len(search_result)} results.")
 
@@ -289,7 +179,7 @@ async def search_vector(request: SearchVectorRequest):
                 "score": scored_point.score,
                 "frame_path": scored_point.payload.get("frame_path"),
                 "original_video": scored_point.payload.get("original_video"),
-                "vector": scored_point.vector  # ✅ Add vector to response
+                "vector": scored_point.vector  
             })
 
         return {"success": True, "results": results_data}
