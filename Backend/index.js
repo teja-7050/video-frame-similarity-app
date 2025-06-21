@@ -26,5 +26,5 @@ app.use("/api", apiRoutes);
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-  console.log(`🚀 Express server running on http://localhost:${PORT}`)
+  console.log(`Express server running on http://localhost:${PORT}`)
 );
