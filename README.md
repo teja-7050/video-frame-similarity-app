@@ -38,3 +38,10 @@ cd frontend-vite
 npm install
 npm run dev
 
+### 5. Access the App
+Frontend: http://localhost:5173
+
+FastAPI Docs: http://localhost:8000/docs
+
+Qdrant Dashboard: http://localhost:6333/dashboard
+
