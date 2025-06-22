@@ -56,7 +56,7 @@ router.post("/upload-video", upload.single("video"), async (req, res) => {
     });
 
     console.log(
-      "📡 Sending video processing request to FastAPI:",
+      " Sending video processing request to FastAPI:",
       fastApiProcessVideoUrl
     );
     const response = await axios.post(fastApiProcessVideoUrl, formData, {
